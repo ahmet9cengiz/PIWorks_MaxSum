@@ -16,6 +16,7 @@ public class PIWorks {
     public static void main(String[] args) throws IOException {
         int line_count = 0;
         String line ;
+        int line_c;
 
         //Checks how many lines we have
         try (BufferedReader br = new BufferedReader(new FileReader("input.txt"))) { //tries to create a buffered reader
@@ -26,6 +27,7 @@ public class PIWorks {
         }
 
         int[][] pyramid = new int[line_count][line_count]; //2d integer array to visualize the input pyramid
+        line_c = line_count;
         line_count = 0;
 
         try (BufferedReader br = new BufferedReader(new FileReader("input.txt"))) { //tries to create a buffered reader
@@ -44,8 +46,8 @@ public class PIWorks {
             e.printStackTrace();
         }
 
-        /*
-        For checking purposes of the 2d array
+
+        /*For checking purposes of the 2d array
 
         for(int i=0; i<pyramid.length; i++) {
             System.out.print("\n");
@@ -53,12 +55,11 @@ public class PIWorks {
                 System.out.printf("%4s ", pyramid[i][j]);
             }
         }
-
         */
 
         int[][] memo = new int[pyramid.length][pyramid.length]; //2d array to use for memoization
 
-        for(int i=0; i<memo.length; i++)  //intializes zero for every cell
+        for(int i=0; i<memo.length; i++)  //initializes zero for every cell
             for(int j=0; j<memo.length; j++){
                 memo[i][j] = 0;
             }
@@ -80,9 +81,8 @@ public class PIWorks {
             }
             else { //if it is a valid, non prime value which is not at the last line
                 if(memo[i][j] == 0) { //if this is the first time we saw this cell, stores the value of the maxSum from this cell to the last line in a memo array
-                    memo[i][j] = arr[i][j] + Math.max(Math.max(getMax(arr, i + 1, j, line_count, memo),
-                            getMax(arr, i + 1, j + 1, line_count, memo)),
-                            getMax(arr, i + 1, j - 1, line_count, memo)); //makes the recursive method faster
+                    memo[i][j] = arr[i][j] + Math.max(getMax(arr, i + 1, j, line_count, memo),
+                            getMax(arr, i + 1, j + 1, line_count, memo)); //makes the recursive method faster
                 }
                 return memo[i][j];
             }
